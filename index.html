@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Free backlink verification and indexability checklist for reviewing existing backlinks, link attributes, HTTP status, robots directives, and canonical signals.">
+  <title>Backlink Verification &amp; Indexability Checklist | WEB HOST PUNE</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">FREE SEO WORKFLOW RESOURCE</p>
+    <h1>Backlink Verification &amp; Indexability Checklist</h1>
+    <p class="intro">Review backlinks you have already created. Verify link presence, destination, attributes, HTTP status, robots directives, canonical signals, and next actions.</p>
+    <p class="brand">Maintained by <a href="https://www.webhostpune.com/" target="_blank" rel="noopener noreferrer">WEB HOST PUNE</a></p>
+    <div class="actions">
+      <button id="downloadCsv" class="primary">Download results CSV</button>
+      <button id="printPage">Print / Save PDF</button>
+      <button id="resetAll" class="quiet">Reset checklist</button>
+    </div>
+  </div>
+</header>
+<main class="wrap">
+  <section class="summary panel">
+    <div class="summary-top"><div><h2>Audit progress</h2><p id="progressText">0 of 31 checks completed</p></div><strong id="percent">0%</strong></div>
+    <div class="progress-track" aria-label="Checklist progress"><div id="progressBar"></div></div>
+    <div class="legend"><span class="pill high">High priority</span><span class="pill medium">Medium priority</span><span class="pill low">Low priority</span></div>
+    <p class="note">Progress is saved in this browser on this device. Use CSV export to keep a separate copy of your results.</p>
+  </section>
+  <section class="toolbar">
+    <label for="filter">Show checks
+      <select id="filter">
+        <option value="all">All checks</option>
+        <option value="open">Not completed</option>
+        <option value="done">Completed</option>
+      </select>
+    </label>
+    <label for="search">Search checklist
+      <input id="search" type="search" placeholder="e.g. canonical, nofollow, HTTP status">
+    </label>
+  </section>
+  <div id="checklist"></div>
+  <section class="panel workflow">
+    <h2>Suggested workflow</h2>
+    <ol>
+      <li>Start with the source URL and the intended target URL.</li>
+      <li>Verify link presence, destination, anchor text, and <code>rel</code> attributes.</li>
+      <li>Review HTTP response, robots directives, and canonical signals.</li>
+      <li>Record evidence and classify the result as OK, Needs Review, Blocked, or Missing.</li>
+      <li>Fix what you control, contact the publisher where appropriate, and recheck later.</li>
+    </ol>
+  </section>
+  <section class="panel warning">
+    <h2>Important limitations</h2>
+    <ul>
+      <li>A crawlable or technically indexable page is not guaranteed to be indexed by Google.</li>
+      <li>A robots.txt block can prevent crawling but does not necessarily prevent a URL from appearing in search results.</li>
+      <li>Canonical tags are signals, not guarantees. Search operators are not a complete index-status API.</li>
+      <li><code>nofollow</code>, <code>sponsored</code>, and <code>ugc</code> attributes do not prove whether a page is indexed.</li>
+      <li>This checklist does not provide DA/PA metrics or guarantee rankings, link value, or indexing.</li>
+    </ul>
+  </section>
+  <footer>
+    <p><strong>Useful resources</strong></p>
+    <p><a href="https://www.webhostpune.com/" target="_blank" rel="noopener noreferrer">WEB HOST PUNE</a> ·
+    <a href="https://tools.webhostpune.com/" target="_blank" rel="noopener noreferrer">Backlink Analysis Tool</a> ·
+    <a href="https://ajit360view.com/" target="_blank" rel="noopener noreferrer">Ajit360View — 360° Virtual Tours</a></p>
+    <p class="small">Educational resource. Verify important findings with appropriate tools and the relevant site owner.</p>
+  </footer>
+</main>
+<script>
+const checks = [{"category": "Link presence", "check": "Backlink found on source page", "details": "Open the source page and verify the link exists in the rendered or source content.", "priority": "High"}, {"category": "Link destination", "check": "Destination URL is correct", "details": "Confirm the link resolves to the intended target URL and not an unrelated page.", "priority": "High"}, {"category": "Link destination", "check": "Redirect chain reviewed", "details": "Check whether the target redirects and whether the final destination is expected.", "priority": "Medium"}, {"category": "Link attributes", "check": "rel attributes recorded", "details": "Record whether the link has nofollow, sponsored, ugc, or a combination.", "priority": "High"}, {"category": "Link attributes", "check": "Dofollow status interpreted carefully", "details": "If no qualifying rel attribute is present, record that fact; do not treat it as a ranking guarantee.", "priority": "High"}, {"category": "Anchor text", "check": "Anchor text recorded", "details": "Capture the visible anchor text or note if the link is an image, bare URL, or empty anchor.", "priority": "Medium"}, {"category": "Anchor text", "check": "Anchor is relevant and readable", "details": "Review whether the anchor is useful in context and not misleading or excessively repetitive.", "priority": "Medium"}, {"category": "Source response", "check": "Source page HTTP status checked", "details": "Record the response code and note redirects, errors, or access restrictions.", "priority": "High"}, {"category": "Source response", "check": "Source page loads without an obvious error", "details": "Confirm the page is accessible in a normal browser and is not a soft-error page.", "priority": "High"}, {"category": "Source response", "check": "Source page is not login-gated", "details": "Check whether important content requires authentication or special access.", "priority": "Medium"}, {"category": "Robots directives", "check": "Meta robots directive reviewed", "details": "Look for directives such as noindex or none in the page HTML.", "priority": "High"}, {"category": "Robots directives", "check": "X-Robots-Tag reviewed where available", "details": "Check response headers for X-Robots-Tag directives when your tools expose them.", "priority": "High"}, {"category": "Robots directives", "check": "robots.txt access rule reviewed", "details": "Check whether robots.txt disallows crawling of the source URL path; remember this is not the same as noindex.", "priority": "High"}, {"category": "Canonicalization", "check": "Canonical URL recorded", "details": "Find the source page's declared canonical URL, if present.", "priority": "High"}, {"category": "Canonicalization", "check": "Canonical points to expected URL", "details": "Investigate if the canonical points to another page or a different URL variant.", "priority": "High"}, {"category": "Indexability", "check": "Source page returns a useful response", "details": "Confirm the URL is not a 404, 5xx, or unrelated redirect.", "priority": "High"}, {"category": "Indexability", "check": "Indexability signals summarized", "details": "Combine status, robots directives, canonical signals, and access restrictions; do not infer certainty from one signal.", "priority": "High"}, {"category": "Indexability", "check": "Google index status checked only where needed", "details": "Use Search Console when you own the property or suitable search checks; treat public search results as incomplete evidence.", "priority": "Medium"}, {"category": "Content context", "check": "Link appears in relevant content", "details": "Review the surrounding paragraph or page context for relevance and usefulness.", "priority": "Medium"}, {"category": "Content context", "check": "Page has substantive visible content", "details": "Check whether the source page offers meaningful content rather than a blank, thin, or error-like page.", "priority": "Medium"}, {"category": "Content context", "check": "Link is not hidden or deceptive", "details": "Confirm the link is reasonably visible and not presented in a misleading way.", "priority": "High"}, {"category": "Content context", "check": "Page is not an obvious spam or scraped page", "details": "Review the page manually for copied, auto-generated, irrelevant, or deceptive content.", "priority": "High"}, {"category": "Target page", "check": "Target URL is live", "details": "Open the intended landing page and confirm it loads correctly.", "priority": "High"}, {"category": "Target page", "check": "Target page is indexable where intended", "details": "Review target-page robots directives and canonical signals if search visibility is a goal.", "priority": "High"}, {"category": "Target page", "check": "Target content matches link context", "details": "Confirm the destination fulfills the expectation created by the source link.", "priority": "Medium"}, {"category": "Evidence", "check": "Evidence captured", "details": "Save the checked URL, date, status, screenshot or notes when useful.", "priority": "Low"}, {"category": "Follow-up", "check": "Issue assigned or action recorded", "details": "Record the next step: fix destination, contact publisher, investigate directives, or monitor.", "priority": "Medium"}, {"category": "Follow-up", "check": "Missing link rechecked", "details": "If a link is missing, verify again later and check whether the source URL changed.", "priority": "Medium"}, {"category": "Follow-up", "check": "Blocked or noindex source assessed", "details": "Decide whether the source is worth keeping, correcting, or avoiding in future outreach.", "priority": "Medium"}, {"category": "Reporting", "check": "Final status assigned", "details": "Classify as OK, Needs Review, Blocked, or Missing based on evidence—not assumptions.", "priority": "High"}, {"category": "Reporting", "check": "No indexing or ranking guarantee claimed", "details": "Report technical observations accurately; do not promise Google indexing or ranking gains.", "priority": "High"}];
+const STORAGE_KEY = "whp-backlink-checklist-v1";
+let state = {};
+try { state = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); } catch(e) { state = {}; }
+const list = document.getElementById("checklist");
+const filter = document.getElementById("filter");
+const search = document.getElementById("search");
+function save(){ try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {} }
+function updateProgress(){
+  const done = checks.filter((_,i)=>state[i] && state[i].done).length;
+  const pct = Math.round(done/checks.length*100);
+  document.getElementById("progressText").textContent = `${done} of ${checks.length} checks completed`;
+  document.getElementById("percent").textContent = `${pct}%`;
+  document.getElementById("progressBar").style.width = `${pct}%`;
+}
+function render(){
+  list.innerHTML = "";
+  const q = search.value.trim().toLowerCase();
+  const mode = filter.value;
+  const groups = {};
+  checks.forEach((item,i)=>{
+    const s = state[i] || {};
+    if(mode==="open" && s.done) return;
+    if(mode==="done" && !s.done) return;
+    if(q && !(item.category+" "+item.check+" "+item.details).toLowerCase().includes(q)) return;
+    (groups[item.category] ||= []).push({item,i,s});
+  });
+  Object.entries(groups).forEach(([category,items])=>{
+    const section = document.createElement("section");
+    section.className = "category panel";
+    const h = document.createElement("h2"); h.textContent = category; section.appendChild(h);
+    items.forEach(({item,i,s})=>{
+      const card = document.createElement("article"); card.className = "check";
+      const top = document.createElement("div"); top.className = "check-top";
+      const label = document.createElement("label"); label.className = "check-title";
+      const cb = document.createElement("input"); cb.type = "checkbox"; cb.checked = !!s.done; cb.setAttribute("aria-label","Mark "+item.check+" complete");
+      cb.addEventListener("change",()=>{ state[i] = {...(state[i]||{}),done:cb.checked}; save(); updateProgress(); render(); });
+      const title = document.createElement("span"); title.textContent = item.check;
+      label.append(cb,title); top.appendChild(label);
+      const pr = document.createElement("span"); pr.className = "pill "+item.priority.toLowerCase(); pr.textContent = item.priority+" priority"; top.appendChild(pr);
+      card.appendChild(top);
+      const detail = document.createElement("p"); detail.className = "details"; detail.textContent = item.details; card.appendChild(detail);
+      const fields = document.createElement("div"); fields.className = "fields";
+      [["Status","status",["Not checked","OK","Needs Review","Blocked","Missing"]],["Source URL","source",null],["Target URL","target",null],["Evidence / Notes","notes",null]].forEach(([labelText,key,opts])=>{
+        const wrap = document.createElement("label"); wrap.className = key==="notes"?"field notes-field":"field"; wrap.append(document.createTextNode(labelText));
+        let input;
+        if(opts){ input=document.createElement("select"); opts.forEach(v=>{const o=document.createElement("option");o.value=v;o.textContent=v;input.appendChild(o);}); input.value=s[key]||opts[0];}
+        else if(key==="notes"){ input=document.createElement("textarea"); input.rows=2; input.placeholder="Add evidence or next action"; input.value=s[key]||"";}
+        else { input=document.createElement("input"); input.type="url"; input.placeholder=key==="source"?"https://source-page.example/":"https://target-page.example/"; input.value=s[key]||"";}
+        input.addEventListener("change",()=>{state[i]={...(state[i]||{}),[key]:input.value};save();});
+        wrap.appendChild(input); fields.appendChild(wrap);
+      });
+      card.appendChild(fields); section.appendChild(card);
+    });
+    list.appendChild(section);
+  });
+  if(!list.children.length){ const p=document.createElement("p");p.className="panel";p.textContent="No checks match this filter.";list.appendChild(p);}
+}
+document.getElementById("downloadCsv").addEventListener("click",()=>{
+  const rows=[["Category","Check","What to verify","Priority","Completed","Status","Source URL","Target URL","Evidence / Notes"]];
+  checks.forEach((c,i)=>{const s=state[i]||{};rows.push([c.category,c.check,c.details,c.priority,s.done?"Yes":"No",s.status||"Not checked",s.source||"",s.target||"",s.notes||""]);});
+  const csv=rows.map(row=>row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(",")).join("\r\n");
+  const blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8;"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="backlink-verification-results.csv";a.click();URL.revokeObjectURL(a.href);
+});
+document.getElementById("printPage").addEventListener("click",()=>window.print());
+document.getElementById("resetAll").addEventListener("click",()=>{
+  if(confirm("Reset all saved checklist progress and notes in this browser?")){state={};save();updateProgress();render();}
+});
+filter.addEventListener("change",render); search.addEventListener("input",render);
+updateProgress();render();
+</script>
+</body>
+</html>
